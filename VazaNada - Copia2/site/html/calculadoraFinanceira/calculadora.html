@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora VazaNada</title>
+</head>
+
+<body>
+    <h1>Bem vindo!</h1>
+
+    <h2>Preencha os campos abaixo para estimar sua economia utilizando a solução da <b>VZ<span style="color: #5CE1E6;">ND</span></b>:</h2>
+
+    Quantos vazamentos você teve nos ultimos 12 meses em gasodutos?<br>
+    <input type="number" id="ipt_qtdVazamentos"> <br> <br>
+
+<!-- Talvez modificar para ser solicitado uma média ao invés do maior e do menor -->
+
+    Qual foi a maior quantidade de gás que você já perdeu em uma hora de vazamento? (Em m³/h)<br>
+    <input type="number" id="ipt_maiorVazamento"> <br> <br>
+
+    Qual foi a menor quantidade de gás que você já perdeu em uma hora de vazamento? (Em m³/h)<br>
+    <input type="number" id="ipt_menorVazamento"> <br> <br>
+
+    Qual foi o maior tempo de detecção de um vazamento? (Em minutos)<br>
+    <input type="number" id="ipt_maiorTempo"> <br> <br>
+
+    Qual foi o menor tempo de detecção de um vazamento? (Em minutos)<br>
+    <input type="number" id="ipt_menorTempo"> <br> <br>
+    
+    Quanto custa o m³ do gás? (Em reais)<br>
+    <input type="number" id="ipt_custo_gas"> <br> <br>
+    
+
+    <button onclick="calcular()">Calcular</button>
+
+    <br>
+    <br>
+
+    <div id="div_mensagem"></div>
+</body>
+
+</html>
+
+<script>
+    function calcular() {
+        var qtdVazamentos = Number(ipt_qtdVazamentos.value);
+        var maiorVazamento = Number(ipt_maiorVazamento.value);
+        var menorVazamento = Number(ipt_menorVazamento.value);
+        var maiorTempo = Number(ipt_maiorTempo.value) / 60; // Conversão de min para horas
+        var menorTempo = Number(ipt_menorTempo.value) / 60; // Conversão de min para horas
+        var custoGasMCubico = Number(ipt_custo_gas.value);
+
+        /*
+            Verificação das condições de entrada:
+            - Se qualquer valor for 0, exibe um alerta para preencher todos os campos.
+            - Se qualquer valor for negativo, exibe um alerta dizendo que os valores não podem ser negativos.
+            - Se o maior vazamento for menor que o menor vazamento, exibe um alerta.
+            - Se o maior tempo for menor que o menor tempo, exibe um alerta.
+        */
+
+        /*
+            Explicação do funcionamento do else if:
+            - O else if é usado para verificar múltiplas condições em sequência.
+            - Se a condição do if for falsa, o código verifica a condição do primeiro else if.
+            - Se a condição do primeiro else if for falsa, o código verifica a condição do próximo else if, e assim por diante.
+            - Se todas as condições forem falsas, o bloco de código dentro do else é executado.
+            - Isso permite que você execute diferentes blocos de código dependendo de qual condição é verdadeira.
+        */
+        if (qtdVazamentos == 0 || maiorVazamento == 0 || menorVazamento == 0 || maiorTempo == 0 || menorTempo == 0) {
+            alert("Preencha todos os campos!");
+        } else if (qtdVazamentos < 0 || maiorVazamento < 0 || menorVazamento < 0 || maiorTempo < 0 || menorTempo < 0) {
+            alert("Os valores não podem ser negativos!");
+        } else if (maiorVazamento < menorVazamento) {
+            alert("O maior vazamento não pode ser menor que o menor vazamento!");
+        } else if (maiorTempo < menorTempo) {
+            alert("O menor tempo não pode ser maior que o maior tempo!");
+
+        } else {
+            // Média de quantidade de gás vazado por hora em um vazamento
+            var mediaQuantidadeVazadoPorHora = (maiorVazamento + menorVazamento) / 2;
+            // Média de tempo para conter um vazamento em horas
+            var mediaTempo = (maiorTempo + menorTempo) / 2;
+
+            // Média de perda por vazamento em m³
+            var mediaDePerdaPorVazamento = mediaQuantidadeVazadoPorHora * mediaTempo;
+            // Média de custo por vazamento
+            var mediaDeCustoPorVazamento = mediaDePerdaPorVazamento * custoGasMCubico;
+
+            // Médias de perda por vazamento em m³ por ano e mes
+            var mediaAnual = mediaDePerdaPorVazamento * qtdVazamentos;
+            var mediaMensal = mediaAnual / 12;
+
+            // Médias de custo por vazamento por ano e mes
+            var mediaCustoAnual = mediaDeCustoPorVazamento * qtdVazamentos;
+            var mediaCustoMensal = mediaCustoAnual / 12;
+
+
+            /**
+             * A solução da VZND reduz o tempo para conter vazamentos em até 90%
+             * 
+             * Os valores a baixo são baseados na redução de 90% do tempo de contenção de vazamentos
+             * 
+             * O custo de um vazamento passaria a ser de 10% do valor atual
+             * 
+             */
+
+
+            // Medias de tempo para contenção com desconto de 90% por vazamento
+            var mediaTempoDesconto = mediaTempo * 0.1;
+
+            var mediaDePerdaPorVazamentoDesconto = mediaQuantidadeVazadoPorHora * mediaTempoDesconto;
+            var mediaCustoPorVazamentoDesconto = mediaDePerdaPorVazamentoDesconto * custoGasMCubico;
+
+            var mediaCustoAnualDesconto = mediaCustoPorVazamentoDesconto * qtdVazamentos;
+            var mediaCustoMensalDesconto = mediaCustoAnualDesconto / 12;
+
+
+
+
+            div_mensagem.innerHTML = `
+                    <b>Você perdeu aproximadamente:</b> 
+                    <ul>
+                        <li>💸 <b style="color: red">${mediaCustoAnual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> nos últimos 12 meses.</li>
+                        <li>📅 Uma média mensal de <b style="color: red">${mediaCustoMensal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b></li>
+                        <li>📉 Perdendo aproximadamente <b style="color: red">${mediaMensal.toLocaleString()} m³ </b> de gás por mês</li>
+                        <li>🔄 Perdendo aproximadamente <b style="color: red">${mediaAnual.toLocaleString()} m³</b> de gás por ano</li>
+                    </ul>
+                    
+                    <b>Com a solução da VZ<span style="color: #5CE1E6">ND</span>, você poderia:</b>
+                    <ul>
+                        <li>⏳ A média de tempo atual que você leva para conter um vazamento é de ${(mediaTempo * 60).toFixed(0)} minutos</li>
+                        <li>⚡ Você passaria a detectar um vazamento em até ${(mediaTempoDesconto * 60).toFixed(0)} minutos</li>
+                        <li>⏱️ Reduzindo o tempo para detectar vazamentos em até 90%</li>
+                        <li>💰 Seu custo que antes era de ${mediaDeCustoPorVazamento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} por vazamento, passaria a ser de ${mediaCustoPorVazamentoDesconto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} por vazamento</li>
+                    </ul>
+                    
+                    <b>Economia:</b>
+                    <ul>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaDeCustoPorVazamento - mediaCustoPorVazamentoDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> <b>por vazamento</b></li>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaCustoMensal - mediaCustoMensalDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> <b>por mês</b></li>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaCustoAnual - mediaCustoAnualDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</ b> <b>por ano</b></li>
+                    </ul>
+            `;
+
+        }
+
+    }
+</script>

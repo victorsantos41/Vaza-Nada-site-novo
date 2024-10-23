@@ -1,0 +1,3 @@
+Caso queira saber mais sobre a API e como é utilizada, além de utilizar-lá no seu projeto, entre no seguinte link:
+
+https://github.com/BandTec/dat-acqu-ino

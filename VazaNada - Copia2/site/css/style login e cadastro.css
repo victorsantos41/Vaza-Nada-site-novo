@@ -1,0 +1,180 @@
+/* Adicionar aqui toda a estilização criada para sua aplicação. */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../assets/background/home.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden; /* não mexe na lateral */
+}
+
+:root {
+    
+        --tamanho-header: 80px;
+        --tamanho-banner: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
+        --tamanho-login: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
+        --tamanho-footer: 80px;
+}
+
+.header {
+    height: var(--tamanho-header);
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    top: 0; 
+    left: 0px; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    margin-bottom: 30px;
+    
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 10px; 
+}
+
+.titulo img {
+    margin-top: 15px;
+    height: 110px;
+}
+
+.navbar {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    
+    
+}
+.navbar .navbar-elementos{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    position: relative;
+    justify-content: flex-end;
+    margin-right: 50px;
+    margin-top: 40px;
+}
+
+.navbar a {
+    color: #fff;
+    font-style: normal;
+    font-weight: 900;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: #50FFDF;
+}
+
+.navbar button{
+    background-color: transparent;
+    border: solid 3px #50FFDF;
+    border-radius: 8px;
+   
+    color: #50FFDF;
+    font-weight: 900;
+    transition: transform 0.8s, background-color 0.8s, border 0.8s;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.card h2{
+    text-align: center;
+}
+
+.formulario {
+    padding: 5%;
+}
+
+.campo {
+    padding: 2%;
+}
+
+input {
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #50FFDF;
+    border-radius: 5px;
+    width: 90%;
+    background-color: transparent;
+    color: #ffffff;
+    outline: none;
+}
+
+.botao {
+    margin-top: 5%;
+    width: 100%;
+    padding: 10px;
+    background-color: #50FFDF;
+    border: none;
+    border-radius: 7px;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.8s, background-color 0.8s, border 0.8s;
+}
+
+.botao:hover {
+    background-color: #000;
+    transform: translateY(-5px);
+    border: 2px solid #00fff2;
+}
+
+.footer {
+    background-color: #008a9c;
+    height: var(--tamanho-footer);
+    color: #fff;
+    display: flex;
+    font-size: 15px;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+.footer h4{
+    margin-bottom: 0;
+}
+
+.version {
+    margin-bottom: 5px;
+    
+}
+
+.footer .container {
+    justify-content: center;
+    align-self: center;
+}
+
+.x {
+    color: cyan;
+}

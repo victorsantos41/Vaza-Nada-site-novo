@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/styleFC.css"/>
+    <title>Fale Conosco</title>
+    <link rel="shortcut icon" type="imagex/png" href="">
+    <style>
+        body{
+            overflow: hidden;
+                }
+        </style>
+</head>
+<body>
+        <div class="bg-form">
+            <div class="box-form"> 
+            <form name="form-contato">
+        
+                    <h1 class="fale-conosco">Fale conosco</h1>
+
+                    <input type="text" id="nomeid" placeholder="Digite seu nome" required="required" name="nome" />
+                    <label for="nome">Nome</label>
+        
+                    <input type="text" id="nascimentoid" placeholder="Digite o nome de sua empresa" required="required" name="Empresa" />
+                    <label for="nome">Empresa</label>
+                
+                    <input type="tel" id="foneid" placeholder="(xx) xxxxx-xxxx" name="fone" />
+                    <label for="fone">Telefone</label>
+                    
+                    <input type="email" id="emailid" placeholder="Seu melhor email" name="email" />
+                    <label for="email">Email</label>
+                
+                    <textarea placeholder="Escreva sua mensagem"></textarea>
+        
+                    <br>
+                    <fieldset class="checkbox">
+                        <legend>Qual sua prefêrencia para que possamos entrar em contato?</legend>
+                      
+                        <div>
+                          <input type="checkbox" id="email" name="email" checked />
+                          <label>Email</label>
+                        </div>
+                      
+                        <div>
+                          <input type="checkbox" id="telefone" name="telefone" />
+                          <label>Telefone</label>
+                        </div>
+                      </fieldset>
+                    
+                    <input type="submit" class="enviar" onclick="Enviar();" value="Enviar" />
+                </form>
+            </div>   
+        </div>    
+</body>
+</html>

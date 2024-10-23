@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementando</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+
+<body>
+    <div class="main-container">      
+      <header class="header">
+          <h1>Dashboard</h1>
+      </header>
+        <aside class= "aside">
+            <a href="../../index.html"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000" class="bi bi-house-fill" viewBox="0 0 16 16">
+              <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+              <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
+            </svg></a>
+            <div>
+                <h1>Sensores</h1>
+                <nav>
+                  <a href="#">Sensor 1</a>
+                  <a href="#">Sensor 2</a>
+                  <a href="#">Sensor 3</a>
+                  <a href="#">Sensor 4</a>
+                </nav>
+            </div>
+        </aside>
+        <div class="dashboard">
+          <div class="sensores-info">
+            <div class="sensor-info">
+              <h1>Sensores em estado crítico</h1>
+              <div>
+                <p>sensor 1</p>
+                <p>sensor 3</p>
+              </div>
+            </div>
+            <div class="sensor-info">
+              <h1>Sensores em alerta</h1>
+              <div>
+                <p>sensor 2</p>
+                <p>sensor 4</p>
+              </div>
+            </div>
+            <div class="sensor-info">
+              <h1>Setores</h1>
+              <div>
+                <p>Setor A</p>
+                <p>Setor B</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sensores-grafico-1">
+            <div class="chart-container1">
+                <h1> Setores</h1>
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="chart-container2">
+                <h1> Sensor em alerta</h1>
+                <canvas id="myChart2"></canvas>
+            </div>
+          </div>
+          
+          <div class="sensores-grafico-2">
+            <h1> Setores </h1>
+            <div class="chart-container3">
+                <canvas id="myChart3"></canvas>
+            </div>
+          </div>
+        </div>
+    </div>
+
+ <script>
+        const labels = [ 
+            '7:00',
+            '8:00',
+            '10:00',
+            '11:00',
+            '12:00',
+            '13:00',
+            '14:00',
+            '15:00', 
+            '16:00',
+            '17:00',
+            '18:00',
+            '19:00',
+        ];
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label:'',
+                backgroundColor: 'rgb(108, 229, 232)',
+                borderColor: 'rgb(108, 229, 232)',
+                data: [6, 12, 15 , 20, 23, 38,12, 10, 2, 0, ],
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+
+        const labels2 = [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto', 
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro',
+        ];
+
+        const data2 = {
+            labels: labels2,
+            datasets: [{
+                label: '',
+                backgroundColor: 'rgb(108, 229, 232)',
+                borderColor: 'rgb(108, 229, 232)',
+                data: [5, 0, 7, 4, 0, 2, 3, 0, 5, 0, 10, 0],
+            }],
+
+        }
+        
+        const config2 = {
+            type: 'bar',
+            data: data2,
+            options: {}
+        };
+
+        const data3 = {
+  labels: [
+    'setor A',
+    'setoe B',
+    'setoe C',
+    'setor D',
+    'setoe E',
+  ],
+  datasets: [{
+    label: 'Sensores',
+    data: [15, 20, 25, 20, 20],
+    backgroundColor: [
+      'rgb(108, 229, 232)',
+      'rgb(65, 184, 213)',
+      'rgb(45, 139, 186)',
+      'rgb(47, 95, 152)',
+      'rgb(47, 95, 152)',
+    ],
+    hoverOffset: 4
+  }]
+};
+        
+        const config3 = {
+            type: 'doughnut',
+            data: data3,
+            options: {}
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+        const myChart2 = new Chart(
+            document.getElementById('myChart2'),
+            config2
+        );
+        const myChart3 = new Chart(
+            document.getElementById('myChart3'),
+            config3
+        );
+    </script>
+
+</body>
+</html>

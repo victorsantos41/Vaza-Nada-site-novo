@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador VazaNada</title>
+    <link rel="stylesheet" href="/site/css/style_simulador.css">
+    <link rel="stylesheet" href="/site/css/styleIndex.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+
+<body class="body_simulador">
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="/site/assets/img/logo_grande_VZND_sobre_nos.svg">
+            </div>
+
+            <div class="list-navbar">
+                <ul>
+                    <li class="nav-item"><a class="nav-link" href="/site/index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/site/index.html#servico">Serviço</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/site/index.html#sobre-nos">Sobre nós</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/site/html/simulador.html">Simulador</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/site/html/faleconosco.html">Fale conosco</a></li>
+                </ul>
+            </div>
+
+            <div class="login-button">
+                <button><a href="/site/html/login.html ">Login</a></button>
+            </div>
+
+        </nav>
+    </header>
+
+    <div class="caixa_simulador" id="caixa_simulador">
+        <h1 style="color: white;">Descubra o quanto você pode <span style="color:#50FFDF">economizar</span> com nossa
+            tecnologia!</h1>
+
+
+        <div class="simulador">
+
+            <div>
+
+                <ul class="itens">
+                    <h3>Preencha os dados abaixo e veja como a solução da <span
+                            style="color: white; font-weight: bold;">VZ</span><span
+                            style="font-weight: bold; color: #50FFDF;">ND</span>
+                        pode maximizar seus lucros de maneira imediata:</h3>
+                    <form action="">
+                        <li>Quantos vazamentos sua empresa teve em gasodutos no útimo mês?</li>
+                        <input id="ipt_vazamentos" type="number">
+
+                        <li>Quanto tempo geralmente dura um vazamento? (Em minutos)</li>
+                        <input id="ipt_duraçao_vazamento" type="number">
+
+                        <li>Em média, quanto tempo sua equipe detecta um vazamento? (Em minutos)</li>
+                        <input id="ipt_tempo_detecçao" type="number">
+
+                        <li>Qual a quantidade de gás perdida no vazamento por minuto? (Em m3)</li>
+                        <input id="ipt_perdeu_gas" type="number">
+                </ul>
+            </div>
+            <div class="div_botao_simulador"><button onclick="Economia()">VEJA SUA ECONOMIA</button></div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="container">
+          <h4>&copy; 2024 VZND. Todos os direitos reservados. v1.0.0</h4>
+          </div>
+      </div>    
+
+</body>
+
+</html>
+
+<script>
+
+    function Economia() {
+
+        var vazamentos = Number(ipt_vazamentos.value)
+        var duraçao_vazamento = Number(ipt_duraçao_vazamento.value)
+        var tempo_detecçao = Number(ipt_tempo_detecçao.value)
+        var perdeu_gas = Number(ipt_perdeu_gas.value)
+
+        var novo_tempo = (tempo_detecçao * 0.1)
+        var nova_duraçao = Math.ceil(duraçao_vazamento - (tempo_detecçao - novo_tempo))
+        var nova_duracao_porcentagem = Math.ceil(nova_duraçao / duraçao_vazamento) * 100
+
+        var perdeu_no_mes = perdeu_gas * duraçao_vazamento * vazamentos
+        var novo_perdeu_no_mes = perdeu_gas * nova_duraçao * vazamentos
+
+        var economia = perdeu_no_mes - novo_perdeu_no_mes
+        var economia_porcentagem = Math.ceil(economia / perdeu_no_mes) * 100
+
+        if (vazamentos == '' || duraçao_vazamento == '' || tempo_detecçao == '' || perdeu_gas == '') {
+
+            alert(`Por favor, preencha todos os campos`)
+
+        } else {
+
+
+            // CAIXA ECONOMIA QUE SERÁ EXIBIDA PARA O CLIENTE:
+            caixa_simulador.innerHTML = `
+
+        <h1 style="color: white;">Com a solução desenvolvida pela VZ<span style="color:#50FFDF">ND</span></h1>
+  
+    <div class="simulador"> 
+       
+        <div>
+            <ul class="itens">
+                <h2>Baseando-se no cenário da sua empresa, nossa solução te traz:</h2>
+
+                <h2>Uma redução de até <span style="color:#50FFDF">90%</span> no tempo de detecção de vazamento de gás.</h2>
+
+                <h3>Com isso, o <span style="color:#50FFDF">novo</span> cenário da sua empresa com a solução VZ<span style="color:#50FFDF">ND</span> possibilita:</h3>
+
+                <li>Detectar um vazamento em <span style="color:#50FFDF"><b>${novo_tempo} min</b></span> (${tempo_detecçao * 0.9} min mais eficiente) ⚡</li>
+                <li>Vazamentos durando no máximo <span style="color:#50FFDF"><b>${nova_duraçao} min</b></span> (${nova_duracao_porcentagem}% mais curtos) 🕗</li> 
+                <li>Economizar <span style="color:#50FFDF"><b>${economia} m3</b></span> de gás no mês (${economia_porcentagem}% a mais) 📈</li> 
+                <li>Maior prevenção de acidentes nos gasodutos ✅</li> 
+            </ul>
+        </div>
+            <div class="div_botao_economia"><button onclick="Economia()">ADQUIRIR SOLUÇÃO</button></div>
+    </div>
+    
+
+    <style>
+       
+    .simulador {
+
+    width: 70%;
+    height: 70%;
+
+    }
+
+
+.simulador .itens {
+
+    line-height: 2;
+
+}
+
+.simulador h3 {
+
+    width: 100%;
+
+}
+
+.div_botao_economia {
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: flex-end;
+    top: 18px;
+
+}
+            </style>
+        `
+
+        }
+    }
+</script>

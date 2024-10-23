@@ -1,0 +1,24 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Lexend Deca';
+    height: 100vh;  
+}
+
+/* 
+Value	Common weight name
+400	    Normal
+500	    Medium
+600	    Semi Bold (Demi Bold)
+700	    Bold 
+800     Extra-bold
+900     Black
+*/
+
+
+

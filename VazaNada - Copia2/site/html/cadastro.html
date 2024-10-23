@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>VZND | Cadastro</title>
+
+  <link rel="stylesheet" href="../css/style login e cadastro.css" />
+  <link rel="icon" href="./assets/img vznd/vznd.png" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+</head>
+
+<body>
+  
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">
+          <img src="../assets/img/vznd.png" />
+        </h1>
+        <ul class="navbar navbar-elementos">
+          <li><a href="login.html">login</a></li>
+         <a> <button onclick="home()" class="botao"><img src="../assets/img/home--v4.png" height="30px"/></button></a>
+        </ul>
+      </div>
+    </div>
+   
+
+    <div class="main-content">
+    
+        <div class="container">
+          <div class=" main-content card card-cadastro">
+            <div class="formulario">
+            <h2>Cadastre-se</h2>
+            
+              <div class="campo">
+                <span>Nome :</span>
+                <input id="input_nome" type="text" placeholder="Insira aqui seu nome" />
+                <div id="divvalidarNome" style="color: rgb(255, 0, 0)"></div>
+              </div>
+              <div class="campo">
+                <span>Email (usuário):</span>
+                <input id="input_email" type="text" placeholder="Seu email" />
+                <div id="divvalidarEmail" style="color: rgb(255, 0, 0)"></div>
+              </div>
+              <div class="campo">
+                <span>CNPJ:</span>
+                <input id="input_cnpj" type="text" placeholder="00.000.000/0000-00" />
+                <div id="divvalidarCNPJ" style="color: rgb(255, 0, 0)"></div>
+              </div>
+              <div class="campo">
+                <span>Razão Social:</span>
+                <input id="input_razao" type="text" placeholder="Razão Social" />
+                <div id="divvalidarRazao" style="color: rgb(255, 0, 0)"></div>
+              </div>
+              <div class="campo">
+                <span>Senha:</span>
+                <input id="input_senha" type="password" placeholder="******" />
+                <div id="divvalidarSenha" style="color: rgb(255, 0, 0)"></div>
+              </div>
+              <div class="campo">
+                <span>Confirmação da Senha:</span>
+                <input id="input_confirmacao_senha" type="password" placeholder="******" />
+                <div id="divvalidarSenha2" style="color: rgb(255, 0, 0)"></div>
+              </div>
+              <button onclick="cadastrar()" class="botao">Cadastrar</button>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <h4>&copy; 2024 VZND. Todos os direitos reservados.</h4>
+        <span class="version">v1.0.0</span>
+      </div>
+    </div>
+  <!-- </div>  -->
+</body>
+
+</html>
+<script>
+  
+  function cadastrar(){
+//variaveis para as inputs
+
+var nome = input_nome.value;
+  var email = input_email.value;
+  var cnpj = input_cnpj.value;
+  var senha = input_senha.value;
+  var confirmacao = input_confirmacao_senha.value;
+  var razao = input_razao.value;
+
+  //validar nome
+
+  if(nome.length > 0)
+  {
+    divvalidarNome.innerHTML = `✅`;
+  }
+  else
+  {
+    divvalidarNome.innerHTML = `⛔ Insira um nome valido `;
+  }
+
+//validação do email
+
+    if (email.includes("@")) 
+    {
+      divvalidarEmail.innerHTML = `✅`
+    }
+    else{
+      divvalidarEmail.innerHTML = `⛔ Insira um email valido `
+    }
+    
+    
+    
+    
+    
+//validação do cnpj
+
+    if(cnpj.length == 18)
+    {
+     divvalidarCNPJ.innerHTML = `✅`
+    
+    } 
+    else 
+    {
+       divvalidarCNPJ.innerHTML = `⛔ insira um CNPJ válido <br>
+       siga o parâmetro "00.000.000/0000-00"`
+
+    }
+
+    if(senha.includes(" ")){
+      divvalidarSenha.innerHTML = `Espaços não são permitidos`
+       
+    }
+
+
+    // validação razão 
+    if(razao.length > 0)
+    {
+      divvalidarRazao.innerHTML = `✅`
+    }
+    else
+    {
+      divvalidarRazao.innerHTML = `⛔ insira uma razão social válida`
+    }
+
+//variaveis pro if e for da senha
+
+  var temNumero = false;
+  var temLetram = false;
+  var temLetraM = false;
+
+if (senha.length >= 8) {
+    for (var atual = 0; atual < senha.length; atual++) 
+     {
+        var atual2 = senha[atual];
+        
+        if (atual2 >= 'A' && atual2 <= 'Z') 
+        {
+            temLetraM = true;
+        } 
+        else if (atual2 >= 'a' && atual2 <= 'z')
+         {
+            temLetram = true;
+         } 
+        else if (atual2 >= '0' && atual2 <= '9') 
+        {
+            temNumero = true;
+        }
+    }
+
+    if (temLetraM && temLetram && temNumero) 
+    {
+        divvalidarSenha.innerHTML = `✅`;
+    } 
+    else
+    {
+        divvalidarSenha.innerHTML = `⛔ a Senha deve conter ao menos 8 caracteres válidos, dentre eles :<br>
+           letra(s) Maiúscula(s) (1 ou mais) <br>
+           letra(s) minúsculas(s) (1 ou mais) <br>
+           numero(s) (1 ou mais) <br>`;
+    }
+} 
+else 
+{
+  divvalidarSenha.innerHTML = `⛔ a Senha deve ter pelo menos 8 caracteres.`;
+}
+
+//confirmação da senha
+
+if(confirmacao.length >= 8)
+{
+if(confirmacao == senha)
+{
+  divvalidarSenha2.innerHTML = `✅`;
+}
+else
+{
+  divvalidarSenha2.innerHTML = ` ⛔ Senhas diferentes`;
+}
+} else
+{
+  divvalidarSenha2.innerHTML = `⛔ insira algo válido`;
+}
+
+
+
+
+  }
+  function home()
+  {
+    window.location.href = "index.html";
+  }
+
+</script>

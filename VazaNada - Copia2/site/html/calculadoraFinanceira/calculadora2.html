@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="shortcut icon" href="site\assets\icon\calculadoraFinanceira.ico" type="image/x-icon">
+    <title>Calculadora VazaNada</title>
+</head>
+
+<body>
+    <h1>Bem vindo!</h1>
+
+    <h2>Preencha os campos abaixo para estimar sua economia utilizando a solução da <b>VZ<span style="color: #5CE1E6;">ND</span></b>:</h2>
+
+    Quanto é o seu consumo mensal de gás? (Em m³)<br>
+    <input type="number" id="ipt_consumoMensal"><br> <br>
+    Quantos vazamentos você teve nos ultimos 12 meses em gasodutos?<br>
+    <input type="number" id="ipt_qtdVazamentos"> <br> <br>
+
+    Qual a média de quantidade de gás que você já perdeu em uma hora de vazamento? (Em m³/h)<br>
+    <input type="number" id="ipt_mediaVazamento"> <br> <br>
+
+    Qual a média de tempo de detecção de um vazamento? (Em minutos)<br>
+    <input type="number" id="ipt_mediaTempo"> <br> <br>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <br>
+    <br>
+
+    <div id="div_mensagem"></div>
+</body>
+
+</html>
+
+<script>
+    function calcular() {
+        var consumoMensal = Number(ipt_consumoMensal.value)
+        var qtdVazamentos = Number(ipt_qtdVazamentos.value);
+        var mediaQuantidadeVazadoPorHora = Number(ipt_mediaVazamento.value);
+        var mediaTempo = Number(ipt_mediaTempo.value)
+        var custoGasMCubico = 4.9 ;
+
+        /*
+            Verificação das condições de entrada:
+            - Se qualquer valor for 0, exibe um alerta para preencher todos os campos.
+            - Se qualquer valor for negativo, exibe um alerta dizendo que os valores não podem ser negativos.
+            - Se o maior vazamento for menor que o menor vazamento, exibe um alerta.
+            - Se o maior tempo for menor que o menor tempo, exibe um alerta.
+        */
+
+        /*
+            Explicação do funcionamento do else if:
+            - O else if é usado para verificar múltiplas condições em sequência.
+            - Se a condição do if for falsa, o código verifica a condição do primeiro else if.
+            - Se a condição do primeiro else if for falsa, o código verifica a condição do próximo else if, e assim por diante.
+            - Se todas as condições forem falsas, o bloco de código dentro do else é executado.
+            - Isso permite que você execute diferentes blocos de código dependendo de qual condição é verdadeira.
+        */
+        if (qtdVazamentos == 0 || mediaQuantidadeVazadoPorHora == 0 || mediaTempo == 0 || consumoMensal == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Campos não preenchidos",
+                text: "Preencha todos os campos!",
+                showClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                        `
+                },
+                hideClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                       `
+                },
+            });
+        } else if (qtdVazamentos < 0 || mediaQuantidadeVazadoPorHora < 0 || mediaTempo < 0 || consumoMensal < 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Campos negativados",
+                text: "Algum campo está negativado, verifique as informações inseridas!",
+                showClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                        `
+                },
+                hideClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                       `
+                },
+            });
+        } else {
+            // Média de quantidade de gás vazado por hora em um vazamento
+            // Média de tempo para conter um vazamento em horas
+            // prejuizo é em média de 1 a 5% do consumo mensal de gás nas empresas
+            var prejuizoConsumoMensal = consumoMensal * 0.05
+            // Média de perda por vazamento em m³
+            var mediaDePerdaPorVazamento = mediaQuantidadeVazadoPorHora * mediaTempo;
+            // Média de custo por vazamento
+            var mediaDeCustoPorVazamento = mediaDePerdaPorVazamento * custoGasMCubico;
+
+            // Médias de perda por vazamento em m³ por ano e mes
+            var mediaAnual = mediaDePerdaPorVazamento * qtdVazamentos;
+            var mediaMensal = mediaAnual / 12;
+
+            // Médias de custo por vazamento por ano e mes
+            var mediaCustoAnual = mediaDeCustoPorVazamento * qtdVazamentos;
+            var mediaCustoMensal = mediaCustoAnual / 12;
+            var mediaCustoTrimensal = mediaCustoAnual / 4;
+            var mediaCustoSemestre = mediaCustoAnual / 2;
+
+
+            /**
+             * A solução da VZND reduz o tempo para conter vazamentos em até 90%
+             * 
+             * Os valores a baixo são baseados na redução de 90% do tempo de contenção de vazamentos
+             * 
+             * O custo de um vazamento passaria a ser de 10% do valor atual
+             * 
+             */
+
+
+            // Medias de tempo para contenção com desconto de 90% por vazamento
+            var mediaTempoDesconto = mediaTempo * 0.1;
+
+            var mediaDePerdaPorVazamentoDesconto = mediaQuantidadeVazadoPorHora * mediaTempoDesconto;
+            var mediaCustoPorVazamentoDesconto = mediaDePerdaPorVazamentoDesconto * custoGasMCubico;
+
+            var mediaCustoAnualDesconto = mediaCustoPorVazamentoDesconto * qtdVazamentos;
+            var mediaCustoMensalDesconto = mediaCustoAnualDesconto / 12;
+            var mediaCustoTrimensalDesconto = mediaCustoAnualDesconto / 4;
+            var mediaCustoSemestreDesconto = mediaCustoAnualDesconto / 2;
+
+
+
+            div_mensagem.innerHTML = `
+                    <b>Você perdeu aproximadamente:</b> 
+                    <ul>
+                        <li>💸 <b style="color: red">${mediaCustoAnual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> nos últimos 12 meses.</li>
+                        <li>📅 Uma média mensal de <b style="color: red">${mediaCustoMensal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b></li>
+                        <li>📉 Perdendo aproximadamente <b style="color: red">${mediaMensal.toLocaleString()} m³ </b> de gás por mês</li>
+                        <li>🔄 Perdendo aproximadamente <b style="color: red">${mediaAnual.toLocaleString()} m³</b> de gás por ano</li>
+                    </ul>
+                    
+                    <b>Com a solução da VZ<span style="color: #5CE1E6">ND</span>, você poderia:</b>
+                    <ul>
+                        <li>⏳ A média de tempo atual que você leva para conter um vazamento é de ${(mediaTempo * 60).toFixed(0)} minutos</li>
+                        <li>⚡ Você passaria a detectar um vazamento em até ${(mediaTempoDesconto * 60).toFixed(0)} minutos</li>
+                        <li>⏱️ Reduzindo o tempo para detectar vazamentos em até 90%</li>
+                        <li>💰 Seu custo que antes era de ${mediaDeCustoPorVazamento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} por vazamento, passaria a ser de ${mediaCustoPorVazamentoDesconto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} por vazamento</li>
+                    </ul>
+                    
+                    <b>Economia:</b>
+                    <ul>
+                        <li><b>💵 A partir de um ticket médio de <b style="color: green">${(custoGasMCubico).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> por m³, com a solução da </b> <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaDeCustoPorVazamento - mediaCustoPorVazamentoDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> <b>por vazamento</b></li>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaCustoMensal - mediaCustoMensalDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> <b>por mês</b></li>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaCustoTrimensal - mediaCustoTrimensalDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> <b>por trimestre</b></li>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaCustoSemestre - mediaCustoSemestreDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b> <b>por semestre</b></li>
+                        <li>💵 Com a solução da <b>VZ<span style="color: #5CE1E6">ND</span><b>, você poderia <b style="color: green">economizar</b> aproximadamente <b style="color: green">${(mediaCustoAnual - mediaCustoAnualDesconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</ b> <b>por ano</b></li>
+                    </ul>
+
+                    <br>
+
+                    <button onclick="propaganda()">Clique aqui caso queira lucrar</button>
+            `;
+
+        }
+
+    }
+
+    function propaganda() {
+        Swal.fire({
+                icon: "info",
+                title: "Contato",
+                showCloseButton: true,
+                showDenyButton: true,
+                denyButtonColor: "#5CE1E6",
+                denyButtonText: "Conheça mais sobre o projeto",
+                confirmButtonText: "Enviar informações!",
+                showClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                        `
+                },
+                hideClass: {
+                popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                       `
+                },
+                footer: '<a href="https://github.com/Robert1730/VazaNada" target="_blank">Clique aqui para já entrar em contato direto conosco</a>',
+                html: `
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome"placeholder="Insira o nome da sua empresa" required/>
+                    <br>
+
+                    <label for="fone">Telefone:</label>
+                    <input type="tel" id="fone"placeholder="(xx) xxxxx-xxxx"/>
+                    <br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Seu melhor email"/>
+                
+                    <br>
+                    <textarea placeholder="Deixe sua mensagem"></textarea>
+                    <br>
+
+                    <fieldset class="checkbox">
+                        <legend>Por onde devemos entrar em contato?</legend>
+                      
+                        <div>
+                          <input type="checkbox" checked/>
+                          <label>Email</label>
+                        </div>
+                      
+                        <div>
+                          <input type="checkbox"/>
+                          <label>Telefone</label>
+                        </div>
+                      </fieldset>
+                    `,
+
+                    preConfirm: () => {
+                    var nome = document.getElementById('nome').value;
+                    var email = document.getElementById('email').value;
+                    var fone = document.getElementById('fone').value;
+
+        if (!nome || (!email && !fone)) {
+            Swal.showValidationMessage('Por favor, preencha todos os campos obrigatórios (nome e um desses dois campos: E-mail, Telefone) para podermos entrar em contato.');
+            return false;
+        }
+        return { nome, email, fone };
+    }
+                    
+                }).then((result) => {
+    if (result.isDenied) {
+        window.open("https://github.com/Robert1730/VazaNada", "_blank");
+        return; 
+    }
+
+    if (result.isConfirmed) {
+        Swal.fire({
+            icon: "success",
+            title: "Enviado",
+            text: "Suas informações foram enviadas com sucesso, entraremos em contato em 24 horas úteis.",
+            confirmButtonText: "Estarei no aguardo!",
+            showCloseButton: true,
+            showDenyButton: true,
+            denyButtonColor: "#5CE1E6",
+            denyButtonText: "Conheça mais sobre o projeto",
+        }).then((result) => {
+            if (result.isDenied) {
+            window.open("https://github.com/Robert1730/VazaNada", "_blank");
+            return; 
+    }
+        });
+    }
+});
+  }
+</script>
+
+<!-- No botão conheça mais sobre o projeto, levar para o site institucional futuramente -->
+<!-- Estilizar a parte de fazer o formulário -->

@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Lexend Deca';
+}
+
+
+.body_simulador {
+
+    background-image: url(/site/assets/background/simulador2v3.jpg);  
+}
+
+:root {
+    --tamanho-header: 80px;
+    --tamanho-footer: 70px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* SIMULADOR: */
+
+.caixa_simulador {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: auto;
+    height: 85%;
+    color: white;
+
+}
+
+.simulador {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    height: 65%;
+    border: solid 4px rgba(255, 255, 255, 0.63);
+    border-radius: 2rem;
+    font-size: 25px;
+    background-color: rgba(0, 0, 0, 0.712);
+}
+
+.simulador ul {
+
+    font-size: 22px;
+
+}
+
+.simulador h3 {
+
+    width: 80%;
+    color: white;
+}
+
+.simulador .itens {
+
+    line-height: 1.8;
+}
+
+.simulador input {
+
+    border: solid 2px #50FFDF;
+    border-radius: 4px;
+    background: transparent;
+    padding: 8px;
+    color: white;
+    font-size: 20px;
+}
+
+.div_botao_simulador {
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+.simulador button {
+
+    position: relative;
+    bottom: 40px;
+    padding: 15px 50px;
+    border: solid 0px;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 20px;
+    color: white;
+    /* background-color: #008a9c; */
+    background-color: #50FFDF;
+    cursor: pointer;
+}
+

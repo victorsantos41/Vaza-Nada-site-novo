@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VZND | Login</title>
+    <link rel="stylesheet" href="/site/css/style login e cadastro.css"> 
+    <link rel="icon" href="/site/assets/img/logo_grande_VZND_sobre_nos.svg">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+  <div class="header">
+        <div class="container">
+            <h1 class="titulo"><img src="/site/assets/img/logo_grande_VZND_sobre_nos.svg" /></h1>
+            <ul class="navbar navbar-elementos">
+              <button onclick="home()" class="botao"><img src="/site/assets/img/home--v4.png" height="30px"/></button>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="login">
+            <div class="container">
+                <div class="card card-login">
+                    <h2>Bem-vindo de volta!</h2>
+                    <div class="formulario">
+                        <div class="campo">
+                            <span>E-mail (Usuário):</span>
+                            <input id="input_email" type="text" placeholder="Login">
+                            <div id="divvalidarEmail" style="color: rgb(179, 2, 2)"></div>
+                        </div>
+                        <div class="campo">
+                            <span>Senha:</span>
+                            <input id="input_senha" type="password" placeholder="******">
+                            <div id="divvalidarSenha" style="color: rgb(179, 2, 2)"></div>
+                        </div>
+                        <button onclick="login()" class="botao">Entrar</button><br><br>
+                        <h3>Ainda não faz parte da VZND? <a class="x" href="cadastro.html">Cadastre-se</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <h4>&copy; 2024 VZND. Todos os direitos reservados.</h4>
+       v1.0.0
+        </div>
+    </div>
+</body>
+
+    <script>
+       function login()
+  {
+    var email = input_email.value;
+    var senha = input_senha.value;
+
+    if (email == "vznd.empresa@sptech.school" ) 
+    {
+      divvalidarEmail.innerHTML = `✅`
+      
+      if(senha == "VazaNada#2024")
+      {
+        divvalidarSenha.innerHTML = '✅'
+
+        window.location.href = "chart.js.html"; //redirecionamento para a tela de dash
+      }
+      else
+      {
+        divvalidarSenha.innerHTML = '⛔ Senha ou usuário incorreto(s)'
+      }
+    } 
+    else{
+        divvalidarEmail.innerHTML = ` ⛔ email não encontrado `
+        divvalidarSenha.innerHTML = '⛔ Senha ou usuário incorreto(s)'
+      }
+
+      if(senha =='')
+      {
+        divvalidarEmail.innerHTML = ` -- `
+         divvalidarSenha.innerHTML = '⛔ insira algo'
+      }
+
+      
+
+
+  }
+  function home()
+  {
+    window.location.href = "../index.html"; //redirecionar para a home
+  }
+</script>
+
+
+</html>
